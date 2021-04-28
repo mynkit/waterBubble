@@ -21,6 +21,7 @@ class ofApp : public ofBaseApp {
 		void gotMessage(ofMessage msg);
 		
         bool bakuretuModeOn;
+        bool reverseModeOn;
         int numBubbles;
 	    vector<float> bubbleSizes;
 		

@@ -5,6 +5,7 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
     bakuretuModeOn = true;
+    reverseModeOn = false;
     numBubbles = NUM_BUBBLES;
     bubbleParticles.getVertices().resize(numBubbles);
     bubbleParticles.getColors().resize(numBubbles);
@@ -57,16 +58,31 @@ void ofApp::update() {
 	for (int i=0; i<numBubbles; i++) {
         if(bubbleParticles.getVertices()[i].y > 27){
             bubbleParticles.getVertices()[i].y = 2;
+        }else if(bubbleParticles.getVertices()[i].y < 2){
+            bubbleParticles.getVertices()[i].y = 27;
         }
         float heightRate = ofMap(bubbleParticles.getVertices()[i].y, 2, 27, 0, 1);
-        bubbleParticles.getVertices()[i] += ofVec3f(0, 0.1 * (1.f + 5.f * heightRate * heightRate), 0);
-        if(bakuretuModeOn){
-            bubbleParticles.setNormal(i,glm::vec3(bubbleSizes[i] * sqrt(heightRate),0,0));
-        }else{
-            if(i % 10 == 0){
+        if(reverseModeOn){
+            bubbleParticles.getVertices()[i] -= ofVec3f(0, 0.1 * (1.f + 5.f * heightRate * heightRate), 0);
+            if(bakuretuModeOn){
                 bubbleParticles.setNormal(i,glm::vec3(bubbleSizes[i] * sqrt(heightRate),0,0));
             }else{
-                bubbleParticles.setNormal(i,glm::vec3(0,0,0));
+                if(i % 10 == 0){
+                    bubbleParticles.setNormal(i,glm::vec3(bubbleSizes[i] * sqrt(heightRate),0,0));
+                }else{
+                    bubbleParticles.setNormal(i,glm::vec3(0,0,0));
+                }
+            }
+        }else{
+            bubbleParticles.getVertices()[i] += ofVec3f(0, 0.1 * (1.f + 5.f * heightRate * heightRate), 0);
+            if(bakuretuModeOn){
+                bubbleParticles.setNormal(i,glm::vec3(bubbleSizes[i] * sqrt(heightRate),0,0));
+            }else{
+                if(i % 10 == 0){
+                    bubbleParticles.setNormal(i,glm::vec3(bubbleSizes[i] * sqrt(heightRate),0,0));
+                }else{
+                    bubbleParticles.setNormal(i,glm::vec3(0,0,0));
+                }
             }
         }
 	}
@@ -107,48 +123,54 @@ void ofApp::keyPressed(int key){
             bakuretuModeOn = true;
         }
         break;
-        case 'w':
-            cameraPositionZ -= cos(ofDegToRad(azimuth)) * positionVerocity;
-            cameraPositionX -= sin(ofDegToRad(azimuth)) * positionVerocity;
-            break;
-        case 'a':
-            cameraPositionX -= cos(ofDegToRad(azimuth)) * positionVerocity;
-            cameraPositionZ += sin(ofDegToRad(azimuth)) * positionVerocity;
-            break;
-        case 's':
-            cameraPositionZ += cos(ofDegToRad(azimuth)) * positionVerocity;
-            cameraPositionX += sin(ofDegToRad(azimuth)) * positionVerocity;
-            break;
-        case 'd':
-            cameraPositionX += cos(ofDegToRad(azimuth)) * positionVerocity;
-            cameraPositionZ -= sin(ofDegToRad(azimuth)) * positionVerocity;
-            break;
-        case OF_KEY_UP:
-            if(elevation<90){
-                cam.rotate(degreeVerocity, ofVec3f(cos(ofDegToRad(azimuth)), 0, -sin(ofDegToRad(azimuth))));
-                elevation += degreeVerocity;
-            }
-            break;
-        case OF_KEY_DOWN:
-            if(elevation>-90){
-                cam.rotate(-degreeVerocity, ofVec3f(cos(ofDegToRad(azimuth)), 0, -sin(ofDegToRad(azimuth))));
-                elevation -= degreeVerocity;
-            }
-            break;
-        case OF_KEY_LEFT:
-            cam.rotate(degreeVerocity, ofVec3f(0, 1, 0));
-            azimuth += degreeVerocity;
-            break;
-        case OF_KEY_RIGHT:
-            cam.rotate(-degreeVerocity, ofVec3f(0, 1, 0));
-            azimuth -= degreeVerocity;
-            break;
-        case 'k':
-            cameraPositionY += positionVerocity;
-            break;
-        case 'j':
-            cameraPositionY -= positionVerocity;
-            break;
+    case 'm':
+        if(reverseModeOn){
+            reverseModeOn = false;
+        }else{
+            reverseModeOn = true;
+        }
+    case 'w':
+        cameraPositionZ -= cos(ofDegToRad(azimuth)) * positionVerocity;
+        cameraPositionX -= sin(ofDegToRad(azimuth)) * positionVerocity;
+        break;
+    case 'a':
+        cameraPositionX -= cos(ofDegToRad(azimuth)) * positionVerocity;
+        cameraPositionZ += sin(ofDegToRad(azimuth)) * positionVerocity;
+        break;
+    case 's':
+        cameraPositionZ += cos(ofDegToRad(azimuth)) * positionVerocity;
+        cameraPositionX += sin(ofDegToRad(azimuth)) * positionVerocity;
+        break;
+    case 'd':
+        cameraPositionX += cos(ofDegToRad(azimuth)) * positionVerocity;
+        cameraPositionZ -= sin(ofDegToRad(azimuth)) * positionVerocity;
+        break;
+    case OF_KEY_UP:
+        if(elevation<90){
+            cam.rotate(degreeVerocity, ofVec3f(cos(ofDegToRad(azimuth)), 0, -sin(ofDegToRad(azimuth))));
+            elevation += degreeVerocity;
+        }
+        break;
+    case OF_KEY_DOWN:
+        if(elevation>-90){
+            cam.rotate(-degreeVerocity, ofVec3f(cos(ofDegToRad(azimuth)), 0, -sin(ofDegToRad(azimuth))));
+            elevation -= degreeVerocity;
+        }
+        break;
+    case OF_KEY_LEFT:
+        cam.rotate(degreeVerocity, ofVec3f(0, 1, 0));
+        azimuth += degreeVerocity;
+        break;
+    case OF_KEY_RIGHT:
+        cam.rotate(-degreeVerocity, ofVec3f(0, 1, 0));
+        azimuth -= degreeVerocity;
+        break;
+    case 'k':
+        cameraPositionY += positionVerocity;
+        break;
+    case 'j':
+        cameraPositionY -= positionVerocity;
+        break;
     }
 }
 
