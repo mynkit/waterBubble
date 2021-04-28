@@ -28,14 +28,23 @@ class ofApp : public ofBaseApp {
 		ofImage bubble;
 		ofVboMesh bubbleParticles;
     
+        int numSprites;
+        vector<float> spriteSizes;
+        vector<float> spriteAzim;
+        vector<float> spriteElev;
+        ofShader spriteShader;
+        ofImage sprite;
+        ofVboMesh spriteParticles;
+        int sphereRadius;
+    
         ofCamera cam;
         ofSpherePrimitive sphere;
         float cameraPositionX;
         float cameraPositionY;
         float cameraPositionZ;
-        float mirrorCamPositionX;
-        float mirrorCamPositionY;
-        float mirrorCamPositionZ;
+        float spherePositionX;
+        float spherePositionY;
+        float spherePositionZ;
         int azimuth;
         int elevation;
         ofPlanePrimitive plane;
