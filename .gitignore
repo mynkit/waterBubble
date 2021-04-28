@@ -1,0 +1,15 @@
+bin/originalParticles.app/
+bin/originalParticlesDebug.app/
+/obj/
+/.vscode/
+*.DS_Store
+.venv/
+*.jpg
+*.png
+*.wav
+.vs/
+*.exe
+*.exp
+*.lib
+*.dll
+
