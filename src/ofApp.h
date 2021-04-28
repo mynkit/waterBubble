@@ -24,10 +24,8 @@ class ofApp : public ofBaseApp {
         bool reverseModeOn;
         int numBubbles;
 	    vector<float> bubbleSizes;
-		
 		ofShader bubbleShader;
 		ofImage bubble;
-		
 		ofVboMesh bubbleParticles;
     
         ofCamera cam;

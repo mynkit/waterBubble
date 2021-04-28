@@ -16,7 +16,7 @@ void ofApp::setup() {
 	for (int i=0; i<numBubbles; i++) {
         bubbleParticles.getVertices()[i] = {ofRandom(15, 25),ofRandom(2, 27),ofRandom(-5, 5)};
         bubbleParticles.getColors()[i].set(ofColor(255, 255, 255));
-        bubbleSizes[i] = ofRandom(5, 100);
+        bubbleSizes[i] = ofRandom(5, 150);
 	}
 
     bubbleParticles.setUsage( GL_DYNAMIC_DRAW );
@@ -56,9 +56,9 @@ void ofApp::update() {
     cam.setPosition(cameraPositionX, cameraPositionY, cameraPositionZ);
 
 	for (int i=0; i<numBubbles; i++) {
-        if(bubbleParticles.getVertices()[i].y > 27){
+        if(bubbleParticles.getVertices()[i].y >= 27){
             bubbleParticles.getVertices()[i].y = 2;
-        }else if(bubbleParticles.getVertices()[i].y < 2){
+        }else if(bubbleParticles.getVertices()[i].y <= 2){
             bubbleParticles.getVertices()[i].y = 27;
         }
         float heightRate = ofMap(bubbleParticles.getVertices()[i].y, 2, 27, 0, 1);

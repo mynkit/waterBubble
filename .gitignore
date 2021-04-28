@@ -1,5 +1,5 @@
-bin/originalParticles.app/
-bin/originalParticlesDebug.app/
+bin/waterBubble.app/
+bin/waterBubbleDebug.app/
 /obj/
 /.vscode/
 *.DS_Store
